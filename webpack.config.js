@@ -6,7 +6,7 @@ require("regenerator-runtime/runtime");
 
 module.exports = {
   mode: "development",
-  entry: "./src/client/index.js", //MAY NEED TO EDIT 
+  entry: "./src/client/index.js",
   devServer: {
     port: 3001
   },
