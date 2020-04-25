@@ -8,11 +8,10 @@
   "scripts": {
     "webpack": "webpack",
     "test": "jest",
-    "start": "node src/server/index.js",
-    "build": "webpack",
+    "start": "node src/server/server.js",
+    "build": "npm run webpack -- --mode production",
     "build-prod": "webpack --config webpack.prod.js",
-    "build-dev": "webpack-dev-server  --config webpack.dev.js --open --watch",
-    "build": "npm run webpack -- --mode production"
+    "build-dev": "webpack-dev-server  --config webpack.dev.js --open --watch"
   },
   "keywords": [],
   "author": "",
@@ -27,8 +26,8 @@
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "regenerator-runtime": "^0.13.5",
     "terser-webpack-plugin": "^2.3.5",
-    "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.5"
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

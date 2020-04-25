@@ -8,7 +8,7 @@ const WorkboxPlugin = require("workbox-webpack-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 
 module.exports = {
-  entry: "./src/client/index.js", //EDIT
+  entry: "./src/client/index.js", 
   optimization: {
     minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})]
   },

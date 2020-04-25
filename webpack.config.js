@@ -8,7 +8,7 @@ module.exports = {
   mode: "development",
   entry: "./src/client/index.js",
   devServer: {
-    port: 3001
+    port: 3000
   },
   module: {
     rules: [
