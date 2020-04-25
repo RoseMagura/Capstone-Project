@@ -1,13 +1,44 @@
-$font-main: 'white';
-$background: #ff9999;
-
-body{
-  background-color: $background;
-  color: $font-main; //Not showing up as white?
-}
+//for mobile sizes
+//Seems fine for now
+$text-color: black;
+$height: 720px;
+$font: Georgia, serif;
+$margin: 50px;
+$font-size: 25px;
 
 input, button{
   &:hover{
     font-weight: bold;
   }
+}
+
+body{
+  color: $text-color;
+  font-family: $font;
+  font-size: $font-size;
+  background-image: url('pinkmarble.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  height: $height;
+  margin: $margin;
+}
+
+//for tablet size
+@media (min-width: 700px) and (max-width: 1000px) {
+  $text-color: black;
+  $height: 720px;
+  $font: Georgia, serif;
+  $margin: 50px;
+  $font-size: 25px;
+}
+
+//for desktop size
+@media (min-width: 800px) {
+  $text-color: black;
+  $height: 720px;
+  $font: Georgia, serif;
+  $margin: 50px;
+  $font-size: 25px;
 }

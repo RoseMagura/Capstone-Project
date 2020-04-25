@@ -28,3 +28,6 @@ app.get('/', function(req,res){
 //Set up POST Request
 
 //Set up GET Request
+app.get('/getGeoData', function(req, res){
+  res.send('hello world');
+})

@@ -8,7 +8,7 @@ module.exports = {
   mode: "development",
   entry: "./src/client/index.js",
   devServer: {
-    port: 3000
+    port: 3030
   },
   module: {
     rules: [
@@ -19,8 +19,12 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
-      }
+        use: ["style-loader", "css-loader", "resolve-url-loader", "sass-loader"]
+      },
+      {
+    test: /\.(png|jpg)$/,
+    loader: 'url-loader'
+  }
     ]
   },
 

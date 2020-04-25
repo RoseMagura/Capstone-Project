@@ -28,8 +28,13 @@ module.exports = {
         },
         {
           test: /\.scss$/,
-          use: ["style-loader", "css-loader", "sass-loader"]
-        }]},
+          use: ["style-loader", "css-loader", "resolve-url-loader", "sass-loader"]
+        },
+        {
+      test: /\.(png|jpg)$/,
+      loader: 'url-loader'
+    }
+      ]},
     plugins: [
     new HtmlWebPackPlugin({
       template: "./src/client/views/index.html",
