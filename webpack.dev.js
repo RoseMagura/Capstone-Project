@@ -5,9 +5,9 @@ const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 
 module.exports = {
   watch: true,
-  entry: "./src/client/index.js", //MAY NEED TO EDIT
+  entry: "./src/client/index.js",
   output: {
-    filename: './dist/main.js' //ALSO EDIT
+    filename: './dist/main.js'
   },
   mode: 'development',
   devServer: {
