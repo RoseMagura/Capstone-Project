@@ -1,0 +1,13 @@
+$font-main: 'white';
+$background: #ff9999;
+
+body{
+  background-color: $background;
+  color: $font-main; //Not showing up as white?
+}
+
+input, button{
+  &:hover{
+    font-weight: bold;
+  }
+}
