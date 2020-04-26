@@ -1,11 +1,15 @@
 //Configuring different parts of the server
 const path = require('path');
+
 const dotenv = require("dotenv");
 dotenv.config();
+
 const express = require('express');
 const app = express();
+
 const cors = require("cors");
 app.use(cors());
+
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -25,9 +29,26 @@ app.get('/', function(req,res){
 
 //Set up APIs
 
-//Set up POST Request
+//Make POST Request
+const appData = [];
+app.post('/postData', postData);
+function postData(req, res){
+  let newEntry = {
+    longitude: req.body.lng,
+    latitude: req.body.lat,
+    country: req.body.country
+  };
+  appData.push(newEntry);
+}
 
-//Set up GET Request
+//Make GET Request
 app.get('/getGeoData', function(req, res){
-  res.send('hello world');
+   res.send(appData);
 })
+
+
+
+//for updating UI
+app.get("/all", function(req, res) {
+  res.send(projectData);
+});
