@@ -11,12 +11,12 @@ const getGeoData = async(url = '')=>{
   const res = await fetch(url)
   try{
     const newData = await res.json();
-    const postalCodes = Object.keys(newData);
-    console.log(newData[postalCodes][0]);
-    console.log('Longitude: ' + newData[postalCodes][0].lng);
-    console.log('Latitude: ' + newData[postalCodes][0].lat);
-    console.log('Country: ' + newData[postalCodes][0].countryCode);
-    return newData;
+    const arrayData = Object.values(newData);
+    const lat = arrayData[0][0].lat;
+    const lng = arrayData[0][0].lng;
+    const country = arrayData[0][0].countryCode;
+    const geoArray = [lat, lng, country];
+    return geoArray;
   }catch(error){
     console.log('error', error);
   }
@@ -46,5 +46,16 @@ function performAction(e){
   e.preventDefault();
   const placeName = document.getElementById('locName').value;
   console.log(placeName + ' submitted!');
-  getGeoData(geoBaseUrl + placeName + geoEndUrl + username);
+  getGeoData(geoBaseUrl + placeName + geoEndUrl + username)
+    .then(async()=>{
+      const geoArray = await getGeoData(geoBaseUrl + placeName + geoEndUrl + username)
+      return geoArray;
+    })
+    .then(function(geoArray){
+      postData('http://localhost:8000/postData', {
+      latitude: geoArray[0],
+      longitude: geoArray[1],
+      country: geoArray[2]
+  }
+);})
 }

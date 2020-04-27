@@ -34,8 +34,8 @@ const appData = [];
 app.post('/postData', postData);
 function postData(req, res){
   let newEntry = {
-    longitude: req.body.lng,
-    latitude: req.body.lat,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
     country: req.body.country
   };
   appData.push(newEntry);
@@ -45,8 +45,6 @@ function postData(req, res){
 app.get('/getGeoData', function(req, res){
    res.send(appData);
 })
-
-
 
 //for updating UI
 app.get("/all", function(req, res) {
