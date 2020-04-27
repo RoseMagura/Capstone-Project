@@ -7,6 +7,8 @@ dotenv.config();
 const express = require('express');
 const app = express();
 
+const request = require('request');
+
 const cors = require("cors");
 app.use(cors());
 
@@ -21,6 +23,11 @@ const server = app.listen(port, ()=>{console.log(`running on localhost:
 
 //Letting express know which directory to check
 app.use(express.static('dist'));
+
+app.use((req, res, next) => {
+  res.header('Acess-Control-Allow-Origin', '*');
+  next();
+});
 
 //Sending the home page HTML to the server using a get method
 app.get('/', function(req,res){

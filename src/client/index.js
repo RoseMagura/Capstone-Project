@@ -1,12 +1,20 @@
 import './styles/styles.scss';
 require("regenerator-runtime/runtime");
 
-//Declaring the base URL for the Geonames API
+//Declaring the different parts of the URL for the Geonames API
 const geoBaseUrl = 'http://api.geonames.org/findNearbyPostalCodesJSON?placename=';
 const geoEndUrl = '&username=';
 const username = 'magurarm';
 
-//Set up Get Request
+//Declaring the different parts of the URL for the Weatherbit API
+const wbBaseUrl = 'http://api.weatherbit.io/v2.0/forecast/daily';
+const wbApiKey = '&key=' + process.env.WB_API_KEY;
+
+//the different parts of the URL for the Pixabay API
+const pixaBaseUrl = 'https://pixabay.com/api/?key=';
+const pixaApiKey = process.env.PIXA_API_KEY;
+
+//Set up Get Request for Geonames API
 const getGeoData = async(url = '')=>{
   const res = await fetch(url)
   try{
@@ -17,6 +25,17 @@ const getGeoData = async(url = '')=>{
     const country = arrayData[0][0].countryCode;
     const geoArray = [lat, lng, country];
     return geoArray;
+  }catch(error){
+    console.log('error', error);
+  }
+}
+
+//Just a basic Get Request
+const getData = async(url = '')=>{
+  const res = await fetch(url)
+  try{
+    const newData = await res.json();
+    return newData;
   }catch(error){
     console.log('error', error);
   }
@@ -45,6 +64,7 @@ submitButton.addEventListener('click', performAction, false);
 function performAction(e){
   e.preventDefault();
   const placeName = document.getElementById('locName').value;
+  const query = '&q=' + placeName + '&image_type=photo';
   console.log(placeName + ' submitted!');
   getGeoData(geoBaseUrl + placeName + geoEndUrl + username)
     .then(async()=>{
@@ -58,4 +78,14 @@ function performAction(e){
       country: geoArray[2]
   }
 );})
+  .then(async()=>{
+    const results = await getData('http://localhost:8000/getPixabayData'
+    + pixaBaseUrl + pixaApiKey + query);
+    const values = Object.values(results);
+    console.log(values[2][0].pageURL);
+    const image = document.createElement('img');
+    image.src = values[2][0].pageURL;
+    document.getElementById('body').appendChild(image);
+  })
+
 }
