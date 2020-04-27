@@ -79,13 +79,12 @@ function performAction(e){
   }
 );})
   .then(async()=>{
-    const results = await getData('http://localhost:8000/getPixabayData'
-    + pixaBaseUrl + pixaApiKey + query);
+    const results = await getData(pixaBaseUrl + pixaApiKey + query);
     const values = Object.values(results);
-    console.log(values[2][0].pageURL);
     const image = document.createElement('img');
-    image.src = values[2][0].pageURL;
-    document.getElementById('body').appendChild(image);
+    image.src = values[2][0].largeImageURL;
+    console.log('image link: ' + values[2][0].largeImageURL);
+    // document.getElementById('body').appendChild(image);
   })
 
 }
