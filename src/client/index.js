@@ -58,9 +58,11 @@ const postData = async(url = '', data = {})=>{
       }
     }
 
+//When user submits button, call the three APIs in succession
 const submitButton = document.getElementById('submit');
 submitButton.addEventListener('click', performAction, false);
-// submitButton.addEventListener('click', setTime, false);
+//When user inputs start and end date, calculate the length of the trip
+submitButton.addEventListener('click', setTime, false);
 function performAction(e){
   e.preventDefault();
   const placeName = document.getElementById('locName').value;
@@ -79,36 +81,45 @@ function performAction(e){
       country: geoArray[2]
   }
 );})
-  .then(async()=>{
-    const results = await getData(pixaBaseUrl + pixaApiKey + query);
-    const values = Object.values(results);
-    const image = document.createElement('img');
-    image.setAttribute('id', 'placePic');
-    image.src = `${values[2][0].largeImageURL}`;
-    image.width = 400; //Edit later?
-    image.height = 400;
-    document.body.appendChild(image);
-    const logo = document.createElement('img');
-    logo.src = 'https://pixabay.com/static/img/logo_square.png';
-    logo.width = 50;
-    logo.height = 50;
-    logo.addEventListener('click', function()
-    {window.open('https://pixabay.com/','_blank');})
-    document.body.appendChild(logo);
-  })
-  .then(async()=>{
-    const geoArray =
-    await getGeoData(geoBaseUrl + placeName + geoEndUrl + username);
-    const weather = await getData(wbBaseUrl + '&lat=' + geoArray[0]
-    + '&lon=' + geoArray[1] + wbApiKey);
-    console.log(weather);
-  }
-  )
+  // .then(async()=>{
+  //   const results = await getData(pixaBaseUrl + pixaApiKey + query);
+  //   const values = Object.values(results);
+  //   const image = document.createElement('img');
+  //   image.setAttribute('id', 'placePic');
+  //   image.src = `${values[2][0].largeImageURL}`;
+  //   image.width = 400; //Edit later?
+  //   image.height = 400;
+  //   document.body.appendChild(image);
+  //   const logo = document.createElement('img');
+  //   logo.src = 'https://pixabay.com/static/img/logo_square.png';
+  //   logo.width = 50;
+  //   logo.height = 50;
+  //   logo.addEventListener('click', function()
+  //   {window.open('https://pixabay.com/','_blank');})
+  //   document.body.appendChild(logo);
+  // })
+  // .then(async()=>{
+  //   const geoArray =
+  //   await getGeoData(geoBaseUrl + placeName + geoEndUrl + username);
+  //   const weather = await getData(wbBaseUrl + '&lat=' + geoArray[0]
+  //   + '&lon=' + geoArray[1] + wbApiKey);
+  //   console.log(weather);
+  // }
+  // )
 }
 
+//Calculating length of trip and displaying on page
 function setTime(){
-  const startDate = getElementById('startDate').value;
-  const endDate = getElementById('endDate').value;
+  const startDate = document.getElementById('startDate').value;
+  const endDate = document.getElementById('endDate').value;
   //convert to Unix
+  const startStamp = (new Date(startDate).getTime()/1000).toFixed(0);
+  const endStamp = (new Date(endDate).getTime()/1000).toFixed(0);
+  const unixDiff = endStamp - startStamp;
+  //Convert unix to days
+  const difference = unixDiff/86400;
+  const lengthMsg = document.createElement('div');
+  lengthMsg.innerHTML = 'You are planning a ' + difference + ' day long trip!';
+  document.body.appendChild(lengthMsg);
 
 }
