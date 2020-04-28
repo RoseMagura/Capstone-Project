@@ -82,10 +82,18 @@ function performAction(e){
     const results = await getData(pixaBaseUrl + pixaApiKey + query);
     const values = Object.values(results);
     const image = document.createElement('img');
+    image.setAttribute('id', 'placePic');
     image.src = `${values[2][0].largeImageURL}`;
     image.width = 400; //Edit later?
     image.height = 400;
     document.body.appendChild(image);
+    const logo = document.createElement('img');
+    logo.src = 'https://pixabay.com/static/img/logo_square.png';
+    logo.width = 50;
+    logo.height = 50;
+    logo.addEventListener('click', function(){window.open('https://pixabay.com/',
+  '_blank');})
+    document.body.appendChild(logo);
   })
 
 }

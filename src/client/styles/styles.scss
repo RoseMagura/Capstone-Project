@@ -1,10 +1,10 @@
 //for mobile sizes
-//Seems fine for now
 $text-color: black;
 $height: 720px;
 $font: Georgia, serif;
 $margin: 50px;
 $font-size: 25px;
+$picMargin: 50px;
 
 input, button{
   &:hover{
@@ -23,6 +23,11 @@ body{
   text-align: center;
   height: $height;
   margin: $margin;
+}
+
+#placePic{
+  margin-top: $picMargin;
+  margin-left: $picMargin;
 }
 
 //for tablet size
