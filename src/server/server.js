@@ -24,22 +24,22 @@ const server = app.listen(port, ()=>{console.log(`running on localhost:
 //Letting express know which directory to check
 app.use(express.static('dist'));
 
+//Sending the home page HTML to the server using a get method
+app.get('/', function(req,res){
+  res.sendFile(path.resolve('dist/index.html'))
+});
+
 //Resolving cors bug that occurs when trying to access Weatherbit API
 app.use((req, res, next) => {
   res.header('Acess-Control-Allow-Origin', '*');
   next();
 });
 
-//Sending the home page HTML to the server using a get method
-app.get('/', function(req,res){
-  res.sendFile(path.resolve('dist/index.html'))
-});
-
-//Set up features for Weatherbit API and resolving bug 
-app.get('/weatherData', function(req, res){
+//Set up features for Weatherbit API and resolving bug
+app.get('/forecast/daily', function(req, res){
   request(
-   { url: 'http://api.weatherbit.io/v2.0/forecast/daily&key='
-   + process.env.WB_API_KEY + '&lat=38.123&lon=-78.543'},
+   { url: req.body},
+
    (error, response, body) => {
      // if (error || response.statusCode !== 200) {
      //   return res.status(500).json({ type: 'error', message: err.message });

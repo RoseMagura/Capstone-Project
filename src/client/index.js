@@ -7,7 +7,7 @@ const geoEndUrl = '&username=';
 const username = 'magurarm';
 
 //Declaring the different parts of the URL for the Weatherbit API
-const wbBaseUrl = 'http://api.weatherbit.io/v2.0/forecast/daily';
+const wbBaseUrl = 'https://api.weatherbit.io/v2.0/forecast/daily?';
 const wbApiKey = '&key=' + process.env.WB_API_KEY;
 
 //the different parts of the URL for the Pixabay API
@@ -95,8 +95,10 @@ function performAction(e){
   '_blank');})
     document.body.appendChild(logo);
   })
-  .then(async()=>
-  const weather = await getData('/weatherData');
-  console.log(weather);
+  .then(async()=>{
+    const weather = await getData('https://cors-anywhere.herokuapp.com/'
+      + wbBaseUrl + 'city=' + placeName + wbApiKey);
+    console.log(weather);
+  }
   )
 }
