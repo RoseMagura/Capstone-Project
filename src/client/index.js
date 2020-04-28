@@ -95,5 +95,8 @@ function performAction(e){
   '_blank');})
     document.body.appendChild(logo);
   })
-
+  .then(async()=>
+  const weather = await getData('/weatherData');
+  console.log(weather);
+  )
 }

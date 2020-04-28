@@ -1,6 +1,6 @@
 //Configuring different parts of the server
 const path = require('path');
-
+//Configure dotenv to work with .env file and secret data
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -24,6 +24,7 @@ const server = app.listen(port, ()=>{console.log(`running on localhost:
 //Letting express know which directory to check
 app.use(express.static('dist'));
 
+//Resolving cors bug that occurs when trying to access Weatherbit API
 app.use((req, res, next) => {
   res.header('Acess-Control-Allow-Origin', '*');
   next();
@@ -34,7 +35,20 @@ app.get('/', function(req,res){
   res.sendFile(path.resolve('dist/index.html'))
 });
 
-//Set up APIs
+//Set up features for Weatherbit API and resolving bug 
+app.get('/weatherData', function(req, res){
+  request(
+   { url: 'http://api.weatherbit.io/v2.0/forecast/daily&key='
+   + process.env.WB_API_KEY + '&lat=38.123&lon=-78.543'},
+   (error, response, body) => {
+     // if (error || response.statusCode !== 200) {
+     //   return res.status(500).json({ type: 'error', message: err.message });
+     // }
+
+     res.json(JSON.parse(body));
+   }
+  )
+})
 
 //Make POST Request
 const appData = [];
@@ -48,12 +62,7 @@ function postData(req, res){
   appData.push(newEntry);
 }
 
-//Make GET Request
+//Make GET Request to Geonames API
 app.get('/getGeoData', function(req, res){
    res.send(appData);
 })
-
-//for updating UI
-app.get("/all", function(req, res) {
-  res.send(projectData);
-});
