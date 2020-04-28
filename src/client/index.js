@@ -58,9 +58,9 @@ const postData = async(url = '', data = {})=>{
       }
     }
 
-
 const submitButton = document.getElementById('submit');
 submitButton.addEventListener('click', performAction, false);
+// submitButton.addEventListener('click', setTime, false);
 function performAction(e){
   e.preventDefault();
   const placeName = document.getElementById('locName').value;
@@ -68,7 +68,8 @@ function performAction(e){
   console.log(placeName + ' submitted!');
   getGeoData(geoBaseUrl + placeName + geoEndUrl + username)
     .then(async()=>{
-      const geoArray = await getGeoData(geoBaseUrl + placeName + geoEndUrl + username)
+      const geoArray =
+      await getGeoData(geoBaseUrl + placeName + geoEndUrl + username)
       return geoArray;
     })
     .then(function(geoArray){
@@ -91,14 +92,23 @@ function performAction(e){
     logo.src = 'https://pixabay.com/static/img/logo_square.png';
     logo.width = 50;
     logo.height = 50;
-    logo.addEventListener('click', function(){window.open('https://pixabay.com/',
-  '_blank');})
+    logo.addEventListener('click', function()
+    {window.open('https://pixabay.com/','_blank');})
     document.body.appendChild(logo);
   })
   .then(async()=>{
-    const weather = await getData('https://cors-anywhere.herokuapp.com/'
-      + wbBaseUrl + 'city=' + placeName + wbApiKey);
+    const geoArray =
+    await getGeoData(geoBaseUrl + placeName + geoEndUrl + username);
+    const weather = await getData(wbBaseUrl + '&lat=' + geoArray[0]
+    + '&lon=' + geoArray[1] + wbApiKey);
     console.log(weather);
   }
   )
+}
+
+function setTime(){
+  const startDate = getElementById('startDate').value;
+  const endDate = getElementById('endDate').value;
+  //convert to Unix
+
 }
