@@ -98,14 +98,21 @@ function performAction(e){
   //   {window.open('https://pixabay.com/','_blank');})
   //   document.body.appendChild(logo);
   // })
-  // .then(async()=>{
-  //   const geoArray =
-  //   await getGeoData(geoBaseUrl + placeName + geoEndUrl + username);
-  //   const weather = await getData(wbBaseUrl + '&lat=' + geoArray[0]
-  //   + '&lon=' + geoArray[1] + wbApiKey);
-  //   console.log(weather);
-  // }
-  // )
+  .then(async()=>{
+    const geoArray =
+    await getGeoData(geoBaseUrl + placeName + geoEndUrl + username);
+    const weatherData = await getData(wbBaseUrl + '&lat=' + geoArray[0]
+    + '&lon=' + geoArray[1] + wbApiKey);
+    const values = Object.values(weatherData);
+    const tripLength = setTime();
+    displayLength(tripLength);
+    const weatherType = values[0][tripLength-1].weather.description;
+    const highTemp = values[0][tripLength-1].high_temp;
+    const lowTemp = values[0][tripLength-1].low_temp;
+    const weatherArray = [weatherType, highTemp, lowTemp];
+    displayWeather(weatherArray)
+  }
+  )
 }
 
 //Calculating length of trip and displaying on page
@@ -117,9 +124,21 @@ function setTime(){
   const endStamp = (new Date(endDate).getTime()/1000).toFixed(0);
   const unixDiff = endStamp - startStamp;
   //Convert unix to days
-  const difference = unixDiff/86400;
-  const lengthMsg = document.createElement('div');
-  lengthMsg.innerHTML = 'You are planning a ' + difference + ' day long trip!';
-  document.body.appendChild(lengthMsg);
+  const tripLength = unixDiff/86400;
+  return tripLength;
+}
 
+function displayLength(x){
+  const lengthMsg = document.createElement('div');
+  lengthMsg.setAttribute('id', 'lengthMsg');
+  lengthMsg.innerHTML = 'You are planning a ' + x + ' day long trip!';
+  document.body.appendChild(lengthMsg);
+}
+
+function displayWeather(x){
+  const weatherMsg = document.createElement('div');
+  weatherMsg.setAttribute('id', 'weatherMsg');
+  weatherMsg.innerHTML = 'The weather will be: ' + x[0] + '\nHigh Temp: '
+  + x[1] + '\nLow Temp: ' + x[2];
+  document.body.appendChild(weatherMsg);
 }
