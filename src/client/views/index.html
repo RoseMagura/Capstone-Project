@@ -3,30 +3,29 @@
 <html>
   <head>
     <title>Travel Planner</title>
-    <link rel='stylesheet' src='./styles/background.css'>
+    <link rel="stylesheet" src="./styles/background.css" />
   </head>
 
   <body>
-
-      <h1>Travel Planner</h1>
-      <div class="grid">
-        <div id="row1">
-          <h2>My Trips:</h2>
-          <div id="row2">
-            <form>
-              <label for="locName">My trip to:</label>
-              <input type="text" id="locName" value="City, Country" /><br />
-              <label for="date">Start Date:</label>
-              <input type="text" id="startDate" value="MM/DD/YYYY" /><br />
-              <label for="date">End Date:</label>
-              <input type="text" id="endDate" value="MM/DD/YYYY" /><br />
-              <input type="submit" id="submit" value="Save Trip" />
-              <button type="button" id="remove2">Remove Trip</button>
-            </form>
-          </div>
+    <h1>Travel Planner</h1>
+    <div class="grid">
+      <div id="row1">
+        <h2>My Trips:</h2>
+        <div id="row2">
+          <form>
+            <label for="locName">My trip to:</label>
+            <input type="text" id="locName" value="City, Country" /><br />
+            <label for="date">Start Date:</label>
+            <input type="text" id="startDate" value="MM/DD/YYYY" /><br />
+            <label for="date">End Date:</label>
+            <input type="text" id="endDate" value="MM/DD/YYYY" /><br />
+            <input type="submit" id="submit" value="Save Trip" />
+            <button type="button" id="remove2">Remove Trip</button>
+          </form>
         </div>
       </div>
-      <!-- <script>
+    </div>
+    <script>
       // Check that service workers are supported
       if ("serviceWorker" in navigator) {
         // Use the window load event to keep the page load performant
@@ -34,6 +33,6 @@
           navigator.serviceWorker.register("/service-worker.js");
         });
       }
-    </script> -->
+    </script>
   </body>
 </html>
