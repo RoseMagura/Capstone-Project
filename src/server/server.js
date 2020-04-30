@@ -4,6 +4,14 @@ const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
 
+//Declaring the different parts of the URL for the Weatherbit API
+const wbBaseUrl = "https://api.weatherbit.io/v2.0/forecast/daily?";
+const wbApiKey = "&key=" + process.env.WB_API_KEY;
+
+//the different parts of the URL for the Pixabay API
+const pixaBaseUrl = "https://pixabay.com/api/?key=";
+const pixaApiKey = process.env.PIXA_API_KEY;
+
 const express = require("express");
 const app = express();
 
@@ -44,9 +52,15 @@ function postData(req, res) {
 }
 
 //Make GET Request to Geonames API
-app.get("/getGeoData", function(req, res) {
+app.get("/getGeoData", (req, res) => {
   res.send(appData);
 });
+
+// app.get('/pixabay', function(req, res)=>{
+//   const query = "&q=" + req.body + "&image_type=photo";
+//   const results = await fetch(pixaBaseUrl + pixaApiKey + query);
+//   res.send(results);
+// });
 
 //Resolving cors bug that occurs when trying to access Weatherbit API
 app.use((req, res, next) => {
@@ -55,9 +69,26 @@ app.use((req, res, next) => {
 });
 
 //Set up features for Weatherbit API and resolving bug
-app.get("/daily", function(req, res) {
+app.get("/daily", (req, res) =>{
   request(
     { url: "https://api.weatherbit.io/v2.0/forecast/daily" },
+    (error, response, body) => {
+      res.json(JSON.parse(body));
+    }
+  );
+});
+//Resolving cors bug that occurs when trying to access Pixabay API
+app.use((req, res, next) => {
+  res.header("Acess-Control-Allow-Origin", "*");
+  next();
+});
+
+// Set up features for Weatherbit API and resolving bug
+app.post("/pixaApi", function(req, res) {
+  console.log(req.body.placeName);
+  request(
+    { url:
+      `https://pixabay.com/api/?key=${pixaApiKey}&q=${req.body.placeName}&image_type=photo`},
     (error, response, body) => {
       res.json(JSON.parse(body));
     }

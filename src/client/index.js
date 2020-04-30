@@ -9,14 +9,6 @@ const geoBaseUrl =
 const geoEndUrl = "&username=";
 const username = "magurarm";
 
-//Declaring the different parts of the URL for the Weatherbit API
-const wbBaseUrl = "https://api.weatherbit.io/v2.0/forecast/daily?";
-const wbApiKey = "&key=" + process.env.WB_API_KEY;
-
-//the different parts of the URL for the Pixabay API
-const pixaBaseUrl = "https://pixabay.com/api/?key=";
-const pixaApiKey = process.env.PIXA_API_KEY;
-
 //Set up Get Request for Geonames API
 const getGeoData = async (url = "") => {
   const res = await fetch(url);
@@ -46,7 +38,7 @@ const getData = async (url = "") => {
 
 //Set up Post Request
 const postData = async (url = "", data = {}) => {
-  console.log(data);
+  // console.log(data);
   const response = await fetch(url, {
     method: "POST",
     credentials: "same-origin",
@@ -63,6 +55,37 @@ const postData = async (url = "", data = {}) => {
   }
 };
 
+//Set up a post route unique to the Pixabay API
+const postToPixa = async(url = "", data = {})=> {
+  const response = await fetch(url, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(function(res){
+    const values = Object.values(res);
+    const image = document.createElement("img");
+    image.setAttribute("id", "placePic");
+    image.src = `${values[2][0].largeImageURL}`;
+    image.width = 400; //Edit later?
+    image.height = 400;
+    document.body.appendChild(image);
+    const logo = document.createElement("img");
+    logo.src = "https://pixabay.com/static/img/logo_square.png";
+    logo.width = 50;
+    logo.height = 50;
+    logo.addEventListener("click", function() {
+      window.open("https://pixabay.com/", "_blank");
+    });
+    document.body.appendChild(logo);
+    return values;}
+  )
+};
+
 //When user inputs start and end date, calculate the length of the trip
 const submitButton = document.getElementById("submit");
 submitButton.addEventListener("click", setTime, false);
@@ -73,7 +96,6 @@ function performAction(e) {
   e.preventDefault(); //prevent endless relaoding
   //Here, set up the different parts of the Geonames URL based on input
   const placeName = document.getElementById("locName").value;
-  const query = "&q=" + placeName + "&image_type=photo";
   console.log(placeName + " submitted!");
   getGeoData(geoBaseUrl + placeName + geoEndUrl + username)
     .then(async () => {
@@ -85,6 +107,7 @@ function performAction(e) {
     //Post the information that was just retrieved
     .then(function(geoArray) {
       postData("http://localhost:8000/postData", {
+        location: placeName,
         latitude: geoArray[0],
         longitude: geoArray[1],
         country: geoArray[2]
@@ -92,37 +115,21 @@ function performAction(e) {
     })
     //Calling the Pixabay API and adding content directly to page
     .then(async () => {
-      const results = await getData(pixaBaseUrl + pixaApiKey + query);
-      const values = Object.values(results);
-      const image = document.createElement("img");
-      image.setAttribute("id", "placePic");
-      image.src = `${values[2][0].largeImageURL}`;
-      image.width = 400; //Edit later?
-      image.height = 400;
-      document.body.appendChild(image);
-      const logo = document.createElement("img");
-      logo.src = "https://pixabay.com/static/img/logo_square.png";
-      logo.width = 50;
-      logo.height = 50;
-      //This complies with the Pixabay policy about using their content
-      logo.addEventListener("click", function() {
-        window.open("https://pixabay.com/", "_blank");
-      });
-      document.body.appendChild(logo);
+      postToPixa('http://localhost:8000/pixaApi', {placeName});
     })
-    //Calling the Weatherbit API and adding to page
+    // Calling the Weatherbit API and adding to page
     .then(async () => {
       const geoArray = await getGeoData(
         geoBaseUrl + placeName + geoEndUrl + username
       );
-      const weatherData = await getData(
-        wbBaseUrl + "&lat=" + geoArray[0] + "&lon=" + geoArray[1] + wbApiKey
-      );
-      const values = Object.values(weatherData);
+      // const weatherData = await getData(
+      //   wbBaseUrl + "&lat=" + geoArray[0] + "&lon=" + geoArray[1] + wbApiKey
+      // );
       //This is an extra feature to let the user think about the length of
       //their trip
       const tripLength = setTime();
       displayLength(tripLength);
+      const values = Object.values(weatherData);
       const weatherType = values[0][tripLength - 1].weather.description;
       const highTemp = values[0][tripLength - 1].high_temp;
       const lowTemp = values[0][tripLength - 1].low_temp;
