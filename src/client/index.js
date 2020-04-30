@@ -38,7 +38,6 @@ const getData = async (url = "") => {
 
 //Set up Post Request
 const postData = async (url = "", data = {}) => {
-  // console.log(data);
   const response = await fetch(url, {
     method: "POST",
     credentials: "same-origin",
@@ -76,6 +75,7 @@ const postToPixa = async(url = "", data = {})=> {
     document.body.appendChild(image);
     const logo = document.createElement("img");
     logo.src = "https://pixabay.com/static/img/logo_square.png";
+    logo.setAttribute('id', 'logo');
     logo.width = 50;
     logo.height = 50;
     logo.addEventListener("click", function() {
@@ -85,7 +85,7 @@ const postToPixa = async(url = "", data = {})=> {
     return values;}
   )
 };
-
+//Set up a post route unique to the Weatherbit API
 const postToWb = async(url = "", data = {})=> {
   const response = await fetch(url, {
     method: "POST",
@@ -137,11 +137,10 @@ function performAction(e) {
       const geoArray = await getData(
         'http://localhost:8000/postData'
       );
-      console.log(geoArray);
       //This is an extra feature to let the user think about the length of
       //their trip
       const lat = geoArray[0].latitude;
-      const lng = geoArray[1].longitude;
+      const lng = geoArray[0].longitude;
       postToWb('http://localhost:8000/wbApi', {lat, lng});
     });
 }
@@ -157,4 +156,19 @@ function setTime() {
   //Convert unix to days
   const tripLength = unixDiff / 86400;
   return tripLength;
+}
+
+//Adding the option to delete a trip using the Remove Trip button
+const removeButton = document.getElementById('remove2');
+removeButton.addEventListener('click', removeTrip, false);
+function removeTrip(){
+  const weatherMsg = document.getElementById("weatherMsg");
+  const lengthMsg = document.getElementById("lengthMsg");
+  const image = document.getElementById('placePic');
+  const logo = document.getElementById('logo');
+  weatherMsg.parentNode.removeChild(weatherMsg);
+  lengthMsg.parentNode.removeChild(lengthMsg);
+  image.parentNode.removeChild(image);
+  logo.parentNode.removeChild(logo);
+
 }
