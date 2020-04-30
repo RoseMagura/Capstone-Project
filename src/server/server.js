@@ -56,12 +56,6 @@ app.get("/getGeoData", (req, res) => {
   res.send(appData);
 });
 
-// app.get('/pixabay', function(req, res)=>{
-//   const query = "&q=" + req.body + "&image_type=photo";
-//   const results = await fetch(pixaBaseUrl + pixaApiKey + query);
-//   res.send(results);
-// });
-
 //Resolving cors bug that occurs when trying to access Weatherbit API
 app.use((req, res, next) => {
   res.header("Acess-Control-Allow-Origin", "*");
@@ -69,9 +63,11 @@ app.use((req, res, next) => {
 });
 
 //Set up features for Weatherbit API and resolving bug
-app.get("/daily", (req, res) =>{
+app.post("/wbApi", (req, res) =>{
+  console.log(req.body);
   request(
-    { url: "https://api.weatherbit.io/v2.0/forecast/daily" },
+    { url: wbBaseUrl + '&lat=' + req.body.lat + '&lon=' + req.body.lng +
+  wbApiKey},
     (error, response, body) => {
       res.json(JSON.parse(body));
     }
@@ -85,7 +81,6 @@ app.use((req, res, next) => {
 
 // Set up features for Weatherbit API and resolving bug
 app.post("/pixaApi", function(req, res) {
-  console.log(req.body.placeName);
   request(
     { url:
       `https://pixabay.com/api/?key=${pixaApiKey}&q=${req.body.placeName}&image_type=photo`},

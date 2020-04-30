@@ -86,6 +86,28 @@ const postToPixa = async(url = "", data = {})=> {
   )
 };
 
+const postToWb = async(url = "", data = {})=> {
+  const response = await fetch(url, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(function(res){
+    const tripLength = setTime();
+    displayLength(tripLength);
+    const values = Object.values(res);
+    const weatherType = values[0][tripLength - 1].weather.description;
+    const highTemp = values[0][tripLength - 1].high_temp;
+    const lowTemp = values[0][tripLength - 1].low_temp;
+    const weatherArray = [weatherType, highTemp, lowTemp];
+    displayWeather(weatherArray);
+  })
+}
+
 //When user inputs start and end date, calculate the length of the trip
 const submitButton = document.getElementById("submit");
 submitButton.addEventListener("click", setTime, false);
@@ -107,7 +129,6 @@ function performAction(e) {
     //Post the information that was just retrieved
     .then(function(geoArray) {
       postData("http://localhost:8000/postData", {
-        location: placeName,
         latitude: geoArray[0],
         longitude: geoArray[1],
         country: geoArray[2]
@@ -127,14 +148,15 @@ function performAction(e) {
       // );
       //This is an extra feature to let the user think about the length of
       //their trip
-      const tripLength = setTime();
-      displayLength(tripLength);
-      const values = Object.values(weatherData);
-      const weatherType = values[0][tripLength - 1].weather.description;
-      const highTemp = values[0][tripLength - 1].high_temp;
-      const lowTemp = values[0][tripLength - 1].low_temp;
-      const weatherArray = [weatherType, highTemp, lowTemp];
-      displayWeather(weatherArray);
+      const lat = geoArray[0];
+      const lng = geoArray[1];
+      postToWb('http://localhost:8000/wbApi', {lat, lng});
+      // const values = Object.values(weatherData);
+      // const weatherType = values[0][tripLength - 1].weather.description;
+      // const highTemp = values[0][tripLength - 1].high_temp;
+      // const lowTemp = values[0][tripLength - 1].low_temp;
+      // const weatherArray = [weatherType, highTemp, lowTemp];
+      // displayWeather(weatherArray);
     });
 }
 

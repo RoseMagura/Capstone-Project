@@ -1,15 +1,16 @@
 //for mobile sizes
 $text-color: black;
-$height: 720px;
+$height: 1700px;
 $font: Georgia, serif;
 $margin: 50px;
-$font-size: 25px;
+$font-size: 50px;
 $picMargin: 50px;
 
 input, button{
   &:hover{
     font-weight: bold;
   }
+  font-size: $font-size;
 }
 
 body{
@@ -31,8 +32,8 @@ body{
 }
 
 //for tablet size
-@media (min-width: 700px) and (max-width: 1000px) {
-  $text-color: black;
+@media (min-width: 600px) and (max-width: 800px) {
+  $text-color: purple;
   $height: 720px;
   $font: Georgia, serif;
   $margin: 50px;
@@ -41,9 +42,9 @@ body{
 
 //for desktop size
 @media (min-width: 800px) {
-  $text-color: black;
+  $text-color: blue;
   $height: 720px;
   $font: Georgia, serif;
   $margin: 50px;
-  $font-size: 25px;
+  $font-size: 20px;
 }
