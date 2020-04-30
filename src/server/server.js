@@ -51,8 +51,13 @@ function postData(req, res) {
   appData.push(newEntry);
 }
 
+app.get('/postData', (req, res)=>{
+  res.send(appData);
+})
+
 //Make GET Request to Geonames API
 app.get("/getGeoData", (req, res) => {
+  console.log(appData);
   res.send(appData);
 });
 
@@ -64,7 +69,6 @@ app.use((req, res, next) => {
 
 //Set up features for Weatherbit API and resolving bug
 app.post("/wbApi", (req, res) =>{
-  console.log(req.body);
   request(
     { url: wbBaseUrl + '&lat=' + req.body.lat + '&lon=' + req.body.lng +
   wbApiKey},

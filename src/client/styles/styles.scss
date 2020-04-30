@@ -11,6 +11,11 @@ input, button{
     font-weight: bold;
   }
   font-size: $font-size;
+  margin: 10px;
+}
+
+label{
+  margin: 200px;
 }
 
 body{
@@ -27,24 +32,60 @@ body{
 }
 
 #placePic{
-  margin-top: $picMargin;
-  margin-left: $picMargin;
+  margin: $picMargin;
+  height: 500px;
+  width: 500px;
+}
+
+#lengthMsg, #weatherMsg{
+  font-size: 40px;
 }
 
 //for tablet size
 @media (min-width: 600px) and (max-width: 800px) {
-  $text-color: purple;
   $height: 720px;
-  $font: Georgia, serif;
-  $margin: 50px;
   $font-size: 25px;
+
 }
 
 //for desktop size
 @media (min-width: 800px) {
-  $text-color: blue;
-  $height: 720px;
-  $font: Georgia, serif;
-  $margin: 50px;
+  $height: 100%;
   $font-size: 20px;
+
+  input, button{
+    &:hover{
+      font-weight: bold;
+    }
+    font-size: $font-size;
+    margin: 10px;
+  }
+
+  label{
+    margin: 10px;
+  }
+
+  body{
+    color: $text-color;
+    font-family: $font;
+    font-size: $font-size;
+    background-image: url('pinkmarble.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    height: $height;
+    margin: $margin;
+  }
+
+  #placePic{
+    margin: $picMargin;
+    height: 500px;
+    width: 500px;
+  }
+
+  #lengthMsg, #weatherMsg{
+    font-size: 30px;
+    margin: 20px;
+  }
 }

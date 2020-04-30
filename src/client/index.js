@@ -119,19 +119,13 @@ function performAction(e) {
   //Here, set up the different parts of the Geonames URL based on input
   const placeName = document.getElementById("locName").value;
   console.log(placeName + " submitted!");
-  getGeoData(geoBaseUrl + placeName + geoEndUrl + username)
-    .then(async () => {
-      const geoArray = await getGeoData(
-        geoBaseUrl + placeName + geoEndUrl + username
-      );
-      return geoArray; //is this unnecessary? Consider removing as refactoring
-    })
+  const geoArray = getGeoData(geoBaseUrl + placeName + geoEndUrl + username)
     //Post the information that was just retrieved
-    .then(function(geoArray) {
-      postData("http://localhost:8000/postData", {
-        latitude: geoArray[0],
-        longitude: geoArray[1],
-        country: geoArray[2]
+  .then(function(geoArray) {
+    postData("http://localhost:8000/postData", {
+      latitude: geoArray[0],
+      longitude: geoArray[1],
+      country: geoArray[2]
       });
     })
     //Calling the Pixabay API and adding content directly to page
@@ -140,23 +134,15 @@ function performAction(e) {
     })
     // Calling the Weatherbit API and adding to page
     .then(async () => {
-      const geoArray = await getGeoData(
-        geoBaseUrl + placeName + geoEndUrl + username
+      const geoArray = await getData(
+        'http://localhost:8000/postData'
       );
-      // const weatherData = await getData(
-      //   wbBaseUrl + "&lat=" + geoArray[0] + "&lon=" + geoArray[1] + wbApiKey
-      // );
+      console.log(geoArray);
       //This is an extra feature to let the user think about the length of
       //their trip
-      const lat = geoArray[0];
-      const lng = geoArray[1];
+      const lat = geoArray[0].latitude;
+      const lng = geoArray[1].longitude;
       postToWb('http://localhost:8000/wbApi', {lat, lng});
-      // const values = Object.values(weatherData);
-      // const weatherType = values[0][tripLength - 1].weather.description;
-      // const highTemp = values[0][tripLength - 1].high_temp;
-      // const lowTemp = values[0][tripLength - 1].low_temp;
-      // const weatherArray = [weatherType, highTemp, lowTemp];
-      // displayWeather(weatherArray);
     });
 }
 
