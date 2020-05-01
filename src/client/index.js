@@ -1,5 +1,6 @@
 import "./styles/styles.scss";
 import { displayLength } from "./js/app.js";
+// import { displayCountdown } from "./js/app.js";
 import { displayWeather } from "./js/app.js";
 require("regenerator-runtime/runtime");
 
@@ -97,14 +98,25 @@ const postToWb = async(url = "", data = {})=> {
   })
   .then(res => res.json())
   .then(function(res){
-    const tripLength = setTime();
-    displayLength(tripLength);
+    const startDate = document.getElementById("startDate").value;
+    const formatted = new Date(startDate);
+    const startDay = formatted.getDate();
     const values = Object.values(res);
-    const weatherType = values[0][tripLength - 1].weather.description;
-    const highTemp = values[0][tripLength - 1].high_temp;
-    const lowTemp = values[0][tripLength - 1].low_temp;
-    const weatherArray = [weatherType, highTemp, lowTemp];
-    displayWeather(weatherArray);
+    if (startDay <= 15){
+      console.log('OK');
+      const weatherType = values[0][startDay - 1].weather.description;
+      const highTemp = values[0][startDay - 1].high_temp;
+      const lowTemp = values[0][startDay - 1].low_temp;
+      const weatherArray = [weatherType, highTemp, lowTemp];
+      displayWeather(weatherArray);
+    } else{
+      const weatherType = values[0][15].weather.description;
+      const highTemp = values[0][15].high_temp;
+      const lowTemp = values[0][15].low_temp;
+      const weatherArray = [weatherType, highTemp, lowTemp];
+      displayWeather(weatherArray);
+  }
+
   })
 }
 
@@ -147,14 +159,20 @@ function performAction(e) {
 
 //Calculating length of trip and displaying on page
 function setTime() {
+  const placeName = document.getElementById("locName").value;
   const startDate = document.getElementById("startDate").value;
   const endDate = document.getElementById("endDate").value;
+  const currentDate = new Date();
   //convert to Unix
-  const startStamp = (new Date(startDate).getTime() / 1000).toFixed(0);
-  const endStamp = (new Date(endDate).getTime() / 1000).toFixed(0);
+  const startStamp = (new Date(startDate).getTime() / 1000);
+  const endStamp = (new Date(endDate).getTime() / 1000);
+  const currentStamp = currentDate/1000;
   const unixDiff = endStamp - startStamp;
   //Convert unix to days
   const tripLength = unixDiff / 86400;
+  displayLength(tripLength);
+  const departDate = Math.ceil(((startStamp - currentStamp)/86400));
+  displayCountdown(placeName, departDate);
   return tripLength;
 }
 
@@ -164,11 +182,20 @@ removeButton.addEventListener('click', removeTrip, false);
 function removeTrip(){
   const weatherMsg = document.getElementById("weatherMsg");
   const lengthMsg = document.getElementById("lengthMsg");
+  const countdownMsg = document.getElementById("countdownMsg");
   const image = document.getElementById('placePic');
   const logo = document.getElementById('logo');
   weatherMsg.parentNode.removeChild(weatherMsg);
   lengthMsg.parentNode.removeChild(lengthMsg);
+  countdownMsg.parentNode.removeChild(countdownMsg);
   image.parentNode.removeChild(image);
   logo.parentNode.removeChild(logo);
 
+}
+
+function displayCountdown(x, y) {
+  const countdownMsg = document.createElement("div");
+  countdownMsg.setAttribute("id", "countdownMsg");
+  countdownMsg.innerHTML = x + " is " + y + " days away.";
+  document.body.appendChild(countdownMsg);
 }

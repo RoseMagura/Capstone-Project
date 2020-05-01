@@ -53,7 +53,6 @@ function postData(req, res) {
 
 app.get('/postData', (req, res)=>{
   res.send(appData);
-  appData.length = 0;
 })
 
 //Make GET Request to Geonames API

@@ -6,6 +6,13 @@ function displayLength(x) {
   document.body.appendChild(lengthMsg);
 }
 
+function displayCountdown(x, y) {
+  const countdownMsg = document.createElement("div");
+  countdownMsg.setAttribute("id", "countdownMsg");
+  countdownMsg.innerHTML = x + " is " + y + " days away.";
+  document.body.appendChild(countdownMsg);
+}
+
 //Displaying the weather data of the trip on the main page,
 //not just in the console
 function displayWeather(x) {
