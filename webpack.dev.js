@@ -39,7 +39,7 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/client/views/index.html",
-      filename: "./index.html"
+      filename: "./dist/index.html"
     }),
     new CleanWebpackPlugin({
       // Simulate the removal of files

@@ -16,15 +16,36 @@ function displayCountdown(x, y) {
 //Displaying the weather data of the trip on the main page,
 //not just in the console
 function displayWeather(x) {
-  const weatherMsg = document.createElement("div");
+  const weatherMsg = document.createElement("TABLE");
+  const row = [];
+  const cell = [];
   weatherMsg.setAttribute("id", "weatherMsg");
-  weatherMsg.innerHTML =
-    "The weather will be: " +
-    x[0] +
-    "\nHigh Temp: " +
-    x[1] +
-    "\nLow Temp: " +
-    x[2];
+  for (let i = 0; i < 4; i++){
+    row[i] = weatherMsg.insertRow(i);
+    row[i].setAttribute("id", `${i}`);
+    for (let y = 0; y < 4; y++){
+      cell[y] = row[i].insertCell(y);
+      cell[y].setAttribute("id", `${i}${y}`);
+    }
+  };
+  const heading = weatherMsg.getElementsByTagName("td")[0];
+  heading.innerHTML = "Weather Forecast";
+  weatherMsg.getElementsByTagName("td")[1].innerHTML = "Weather";
+  weatherMsg.getElementsByTagName("td")[2].innerHTML = "High Temp";
+  weatherMsg.getElementsByTagName("td")[3].innerHTML = "Low Temp";
+  //Refactor the following as a loop
+  weatherMsg.getElementsByTagName("td")[4].innerHTML = "Day 1";
+  weatherMsg.getElementsByTagName("td")[5].innerHTML = x[0][0];
+  weatherMsg.getElementsByTagName("td")[6].innerHTML = x[0][1];
+  weatherMsg.getElementsByTagName("td")[7].innerHTML = x[0][2];
+  weatherMsg.getElementsByTagName("td")[8].innerHTML = "Day 2";
+  weatherMsg.getElementsByTagName("td")[9].innerHTML = x[1][0];
+  weatherMsg.getElementsByTagName("td")[10].innerHTML = x[1][1];
+  weatherMsg.getElementsByTagName("td")[11].innerHTML = x[1][2];
+  weatherMsg.getElementsByTagName("td")[12].innerHTML = "Day 3";
+  weatherMsg.getElementsByTagName("td")[13].innerHTML = x[2][0];
+  weatherMsg.getElementsByTagName("td")[14].innerHTML = x[2][1];
+  weatherMsg.getElementsByTagName("td")[15].innerHTML = x[2][2];
   document.body.appendChild(weatherMsg);
 }
 

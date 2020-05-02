@@ -102,18 +102,36 @@ const postToWb = async(url = "", data = {})=> {
     const formatted = new Date(startDate);
     const startDay = formatted.getDate();
     const values = Object.values(res);
-    if (startDay <= 15){
-      console.log('OK');
+    console.log(values[0]);
+    console.log(startDay);
+    if (startDay <= 14){
       const weatherType = values[0][startDay - 1].weather.description;
       const highTemp = values[0][startDay - 1].high_temp;
       const lowTemp = values[0][startDay - 1].low_temp;
-      const weatherArray = [weatherType, highTemp, lowTemp];
+      const icon = values[0][startDay - 1].weather.icon;
+      const day1 = [weatherType, highTemp, lowTemp];
+      const day2 = [values[0][startDay].weather.description,
+                    values[0][startDay].high_temp,
+                    values[0][startDay].low_temp,
+                    values[0][startDay].weather.icon];
+      const day3 = [values[0][startDay + 1].weather.description,
+                    values[0][startDay + 1].high_temp,
+                    values[0][startDay + 1].low_temp,
+                    values[0][startDay + 1].weather.icon
+                  ];
+      const weatherArray = [day1, day2, day3];
       displayWeather(weatherArray);
     } else{
-      const weatherType = values[0][15].weather.description;
-      const highTemp = values[0][15].high_temp;
-      const lowTemp = values[0][15].low_temp;
-      const weatherArray = [weatherType, highTemp, lowTemp];
+      const weatherType = values[0][13].weather.description;
+      const highTemp = values[0][13].high_temp;
+      const lowTemp = values[0][13].low_temp;
+      const day1 = [weatherType, highTemp, lowTemp];
+      const day2 = [values[0][14].weather.description,
+                    values[0][14].high_temp,
+                    values[0][14].low_temp];
+      const day3 = [values[0][15].weather.description,
+                    values[0][15].high_temp,
+                    values[0][15].low_temp];
       displayWeather(weatherArray);
   }
 
