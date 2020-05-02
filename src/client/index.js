@@ -109,7 +109,7 @@ const postToWb = async(url = "", data = {})=> {
       const highTemp = values[0][startDay - 1].high_temp;
       const lowTemp = values[0][startDay - 1].low_temp;
       const icon = values[0][startDay - 1].weather.icon;
-      const day1 = [weatherType, highTemp, lowTemp];
+      const day1 = [weatherType, highTemp, lowTemp, icon];
       const day2 = [values[0][startDay].weather.description,
                     values[0][startDay].high_temp,
                     values[0][startDay].low_temp,
@@ -121,6 +121,7 @@ const postToWb = async(url = "", data = {})=> {
                   ];
       const weatherArray = [day1, day2, day3];
       displayWeather(weatherArray);
+      loadIcon(weatherArray);
     } else{
       const weatherType = values[0][13].weather.description;
       const highTemp = values[0][13].high_temp;
@@ -133,7 +134,24 @@ const postToWb = async(url = "", data = {})=> {
                     values[0][15].high_temp,
                     values[0][15].low_temp];
       displayWeather(weatherArray);
+      loadIcon(weatherArray);
   }
+  function loadIcon(x){
+    //Refactor with loops?
+    const table = document.getElementById('weatherMsg');
+
+    const logo1 = document.createElement('img');
+    const logo2 = document.createElement('img');
+    const logo3 = document.createElement('img');
+    logo1.src = `https://www.weatherbit.io/static/img/icons/${x[0][3]}.png`;
+    logo2.src = `https://www.weatherbit.io/static/img/icons/${x[1][3]}.png`;
+    logo3.src = `https://www.weatherbit.io/static/img/icons/${x[2][3]}.png`;
+
+    table.rows[1].cells[1].appendChild(logo1);
+    table.rows[2].cells[1].appendChild(logo2);
+    table.rows[3].cells[1].appendChild(logo3);
+    console.log('Icons loaded');
+  };
 
   })
 }
@@ -159,9 +177,9 @@ function performAction(e) {
       });
     })
     //Calling the Pixabay API and adding content directly to page
-    .then(async () => {
-      postToPixa('http://localhost:8000/pixaApi', {placeName});
-    })
+    // .then(async () => {
+    //   postToPixa('http://localhost:8000/pixaApi', {placeName});
+    // })
     // Calling the Weatherbit API and adding to page
     .then(async () => {
       const geoArray = await getData(
