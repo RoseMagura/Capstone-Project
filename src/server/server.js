@@ -36,7 +36,7 @@ app.use(express.static("dist"));
 
 //Sending the home page HTML to the server using a get method
 app.get("/", function(req, res) {
-  res.sendFile(path.resolve("dist/index.html"));
+  res.sendFile('dist/index.html')
 });
 
 //Make POST Request

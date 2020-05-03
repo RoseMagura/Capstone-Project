@@ -7,16 +7,19 @@ module.exports = {
   watch: true,
   entry: "./src/client/index.js",
   output: {
-    filename: "./dist/main.js"
+    filename: "dist/main.js"
   },
   mode: "development",
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    compress: true,
     port: 3030
   },
   module: {
+
     rules: [
+      {
+       test: /\.html$/i,
+       loader: 'html-loader',
+     },
       {
         test: /\.js$/,
 
@@ -39,7 +42,7 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/client/views/index.html",
-      filename: "./dist/index.html"
+      filename: "index.html"
     }),
     new CleanWebpackPlugin({
       // Simulate the removal of files

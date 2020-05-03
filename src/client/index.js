@@ -4,6 +4,12 @@ import { displayLength } from "./js/app.js";
 import { displayWeather } from "./js/app.js";
 require("regenerator-runtime/runtime");
 
+// const tripEl = document.getElementById('trip');
+// function printTrip(){
+//   const grid = document.getElementsByClassName('grid');
+//   printJS('', 'html');
+// }
+
 //Declaring the different parts of the URL for the Geonames API
 const geoBaseUrl =
   "http://api.geonames.org/findNearbyPostalCodesJSON?placename=";
@@ -139,18 +145,11 @@ const postToWb = async(url = "", data = {})=> {
   function loadIcon(x){
     //Refactor with loops?
     const table = document.getElementById('weatherMsg');
-
-    const logo1 = document.createElement('img');
-    const logo2 = document.createElement('img');
-    const logo3 = document.createElement('img');
-    logo1.src = `https://www.weatherbit.io/static/img/icons/${x[0][3]}.png`;
-    logo2.src = `https://www.weatherbit.io/static/img/icons/${x[1][3]}.png`;
-    logo3.src = `https://www.weatherbit.io/static/img/icons/${x[2][3]}.png`;
-
-    table.rows[1].cells[1].appendChild(logo1);
-    table.rows[2].cells[1].appendChild(logo2);
-    table.rows[3].cells[1].appendChild(logo3);
-    console.log('Icons loaded');
+    for(let i = 0; i < 3; i++){
+      const logo = document.createElement('img');
+      logo.src = `https://www.weatherbit.io/static/img/icons/${x[i][3]}.png`;
+      table.rows[(i + 1)].cells[1].appendChild(logo);
+    }
   };
 
   })
