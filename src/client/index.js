@@ -190,7 +190,10 @@ function performAction(e) {
       const lat = geoArray[0].latitude;
       const lng = geoArray[0].longitude;
       postToWb('http://localhost:8000/wbApi', {lat, lng});
-    });
+    })
+    .then(
+      addList()
+    )
 }
 
 //Calculating length of trip and displaying on page
@@ -234,4 +237,30 @@ function displayCountdown(x, y) {
   countdownMsg.setAttribute("id", "countdownMsg");
   countdownMsg.innerHTML = x + " is " + y + " days away.";
   document.body.appendChild(countdownMsg);
+}
+
+function addList(){
+  const box = document.createElement('div');
+  box.setAttribute('id', 'listBox');
+  const listHeading = document.createElement('h3');
+  listHeading.innerHTML = "To Do List: ";
+  const list = document.createElement('ul');
+  const listInput = document.createElement('INPUT');
+  listInput.setAttribute('type', 'text');
+  const inputLabel = document.createElement('label');
+  inputLabel.innerHTML = 'Add a new item to list:';
+  const listButton = document.createElement('button');
+  listButton.innerHTML = 'Add';
+  box.appendChild(listHeading);
+  box.appendChild(inputLabel);
+  box.appendChild(listInput);
+  box.appendChild(listButton);
+  box.appendChild(list);
+  listButton.addEventListener('click', addItem, false);
+  function addItem(){
+    const li = document.createElement('li');
+    li.innerHTML = listInput.value;
+    box.appendChild(li);
+  }
+  document.body.appendChild(box);
 }
