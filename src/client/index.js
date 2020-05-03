@@ -139,6 +139,7 @@ const postToWb = async(url = "", data = {})=> {
       const day3 = [values[0][15].weather.description,
                     values[0][15].high_temp,
                     values[0][15].low_temp];
+      const weatherArray = [day1, day2, day3];
       displayWeather(weatherArray);
       loadIcon(weatherArray);
   }

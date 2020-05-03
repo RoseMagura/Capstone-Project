@@ -17,39 +17,33 @@ function displayCountdown(x, y) {
 //not just in the console
 function displayWeather(x) {
   const weatherMsg = document.createElement("TABLE");
+  const cells = new Array();
   const row = [];
   const cell = [];
   weatherMsg.setAttribute("id", "weatherMsg");
   for (let i = 0; i < 4; i++){
+    cells[i] = new Array();
     row[i] = weatherMsg.insertRow(i);
     row[i].setAttribute("id", `${i}`);
     for (let y = 0; y < 4; y++){
+
       cell[y] = row[i].insertCell(y);
       cell[y].setAttribute("id", `${i}${y}`);
+      cells[i].push(cell[y]);
     }
   };
-  const heading = weatherMsg.getElementsByTagName("td")[0];
-  heading.innerHTML = "Weather Forecast";
 
-  document.getElementById('01').innerHTML = "Weather";
-  // weatherMsg.getElementsByTagName("td")[1].innerHTML = "Weather";
-  weatherMsg.getElementsByTagName("td")[2].innerHTML = "High Temp";
-  weatherMsg.getElementsByTagName("td")[3].innerHTML = "Low Temp";
+  cells[0][0].innerHTML = 'Weather Forecast';
+  cells[0][1].innerHTML = 'Weather Type';
+  cells[0][2].innerHTML = 'High Temp (\u00B0 C)';
+  cells[0][3].innerHTML = 'Low Temp (\u00B0 C)';
 
-  weatherMsg.getElementsByTagName("td")[4].innerHTML = "Day 1";
-  weatherMsg.getElementsByTagName("td")[8].innerHTML = "Day 2";
-  weatherMsg.getElementsByTagName("td")[12].innerHTML = "Day 3";
+  for (let z = 0; z < 3; z++){
+    cells[z+ 1][0].innerHTML = `Day ${z + 1}`;
+    for (let y = 0; y < 3; y++){
+      cells[z + 1][y + 1].innerHTML = x[z][y];
+  }}
 
-  weatherMsg.getElementsByTagName("td")[5].innerHTML = x[0][0];
-  //Refactor with loops?
-  weatherMsg.getElementsByTagName("td")[6].innerHTML = x[0][1];
-  weatherMsg.getElementsByTagName("td")[7].innerHTML = x[0][2];
-  weatherMsg.getElementsByTagName("td")[9].innerHTML = x[1][0];
-  weatherMsg.getElementsByTagName("td")[10].innerHTML = x[1][1];
-  weatherMsg.getElementsByTagName("td")[11].innerHTML = x[1][2];
-  weatherMsg.getElementsByTagName("td")[13].innerHTML = x[2][0];
-  weatherMsg.getElementsByTagName("td")[14].innerHTML = x[2][1];
-  weatherMsg.getElementsByTagName("td")[15].innerHTML = x[2][2];
   document.body.appendChild(weatherMsg);
 }
 
