@@ -108,8 +108,6 @@ const postToWb = async(url = "", data = {})=> {
     const formatted = new Date(startDate);
     const startDay = formatted.getDate();
     const values = Object.values(res);
-    console.log(values[0]);
-    console.log(startDay);
     if (startDay <= 14){
       const weatherType = values[0][startDay - 1].weather.description;
       const highTemp = values[0][startDay - 1].high_temp;
@@ -194,6 +192,9 @@ function performAction(e) {
     .then(
       addList()
     )
+    .then(
+      addFlight()
+    )
 }
 
 //Calculating length of trip and displaying on page
@@ -263,4 +264,28 @@ function addList(){
     box.appendChild(li);
   }
   document.body.appendChild(box);
+}
+
+function addFlight(){
+  const box2 = document.createElement('div');
+  box2.setAttribute('id', 'flightBox');
+  const flightHeading = document.createElement('h3');
+  flightHeading.innerHTML = "Flight Info: ";
+  const flightInput = document.createElement('INPUT');
+  flightInput.setAttribute('type', 'text');
+  const inputLabel2 = document.createElement('label');
+  inputLabel2.innerHTML = 'Add flight information:';
+  const flightButton = document.createElement('button');
+  flightButton.innerHTML = 'Add Flight';
+  box2.appendChild(flightHeading);
+  box2.appendChild(inputLabel2);
+  box2.appendChild(flightInput);
+  box2.appendChild(flightButton);
+  flightButton.addEventListener('click', addFlight, false);
+  function addFlight(){
+    const flightText = document.createElement('div');
+    flightText.innerHTML = flightInput.value;
+    box2.appendChild(flightText);
+  }
+  document.body.appendChild(box2);
 }
