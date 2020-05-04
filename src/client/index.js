@@ -26,6 +26,7 @@ const getGeoData = async (url = "") => {
     const lng = arrayData[0][0].lng;
     const country = arrayData[0][0].countryCode;
     const geoArray = [lat, lng, country];
+    console.log(geoArray);
     return geoArray;
   } catch (error) {
     console.log("error", error);
@@ -142,7 +143,6 @@ const postToWb = async(url = "", data = {})=> {
       loadIcon(weatherArray);
   }
   function loadIcon(x){
-    //Refactor with loops?
     const table = document.getElementById('weatherMsg');
     for(let i = 0; i < 3; i++){
       const logo = document.createElement('img');
@@ -156,10 +156,10 @@ const postToWb = async(url = "", data = {})=> {
 
 //When user inputs start and end date, calculate the length of the trip
 const submitButton = document.getElementById("submit");
-submitButton.addEventListener("click", setTime, false);
+submitButton.addEventListener("click", setTime);
 
 //When user submits button, call the three APIs in succession
-submitButton.addEventListener("click", performAction, false);
+submitButton.addEventListener("click", performAction);
 function performAction(e) {
   e.preventDefault(); //prevent endless relaoding
   //Here, set up the different parts of the Geonames URL based on input
@@ -173,28 +173,51 @@ function performAction(e) {
       longitude: geoArray[1],
       country: geoArray[2]
       });
+    return geoArray;
     })
+  .then(async function(geoArray){
+    const countryData = await
+      getData(`https://restcountries.eu/rest/v2/alpha/${geoArray[2]}`);
+    const countryInfo = document.createElement('div');
+    countryInfo.setAttribute('id', 'countryInfo');
+    const countryArray = [
+      'Country Language: ' + countryData.languages[0].name,
+      'Country Language Native Name: ' + countryData.languages[0].nativeName,
+      'Country Native Name: ' + countryData.nativeName,
+      'Country Population: ' + countryData.population];
+    for(let i = 0; i < countryArray.length; i++){
+      const x = document.createTextNode(`${countryArray[i]}`);
+      countryInfo.appendChild(x);
+      countryInfo.appendChild(document.createElement('br'));
+    }
+    const countryFlag = document.createElement('img');
+    countryFlag.src = `${countryData.flag}`;
+    countryInfo.appendChild(countryFlag);
+    document.body.appendChild(countryInfo);
+}
+
+  )
     //Calling the Pixabay API and adding content directly to page
     // .then(async () => {
     //   postToPixa('http://localhost:8000/pixaApi', {placeName});
     // })
     // Calling the Weatherbit API and adding to page
-    .then(async () => {
-      const geoArray = await getData(
-        'http://localhost:8000/postData'
-      );
-      //This is an extra feature to let the user think about the length of
-      //their trip
-      const lat = geoArray[0].latitude;
-      const lng = geoArray[0].longitude;
-      postToWb('http://localhost:8000/wbApi', {lat, lng});
-    })
-    .then(
-      addList()
-    )
-    .then(
-      addFlight()
-    )
+    // .then(async () => {
+    //   const geoArray = await getData(
+    //     'http://localhost:8000/postData'
+    //   );
+    //   //This is an extra feature to let the user think about the length of
+    //   //their trip
+    //   const lat = geoArray[0].latitude;
+    //   const lng = geoArray[0].longitude;
+    //   postToWb('http://localhost:8000/wbApi', {lat, lng});
+    // })
+    // .then(
+    //   addList()
+    // )
+    // .then(
+    //   addFlight()
+    // )
 }
 
 //Calculating length of trip and displaying on page
@@ -225,11 +248,17 @@ function removeTrip(){
   const countdownMsg = document.getElementById("countdownMsg");
   const image = document.getElementById('placePic');
   const logo = document.getElementById('logo');
-  weatherMsg.parentNode.removeChild(weatherMsg);
+  const flightMsg = document.getElementById('flightBox');
+  const listBox = document.getElementById('listBox');
+  const countryInfo = document.getElementById('countryInfo');
   lengthMsg.parentNode.removeChild(lengthMsg);
   countdownMsg.parentNode.removeChild(countdownMsg);
-  image.parentNode.removeChild(image);
-  logo.parentNode.removeChild(logo);
+  // weatherMsg.parentNode.removeChild(weatherMsg);
+  // image.parentNode.removeChild(image);
+  // logo.parentNode.removeChild(logo);
+  // flightMsg.parentNode.removeChild(flightMsg);
+  // listBox.parentNode.removeChild(listBox);
+  countryInfo.parentNode.removeChild(countryInfo);
 
 }
 

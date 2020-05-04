@@ -53,6 +53,9 @@ function postData(req, res) {
 
 app.get('/postData', (req, res)=>{
   res.send(appData);
+  //clear appData so that once a trip has been posted, it doesn't keep
+  //getting displayed
+  appData.length = 0;
 })
 
 //Make GET Request to Geonames API
