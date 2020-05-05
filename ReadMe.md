@@ -10,7 +10,10 @@ vacation.
 
 ##How to Run
 
-Just clone the repo, download, and then run using Webpack. You can use the command 'npm run start' to get the production mode running and then open a browser and go to localhost:8000/ to see the webpage.
+Just clone the repo, download, and then run using Webpack.
+You can use the command 'npm run build-prod' and then 'npm run build'
+to get the production mode running and then open a browser and go to
+localhost:8000/ to see the webpage.
 
 ##Bonus Features
 

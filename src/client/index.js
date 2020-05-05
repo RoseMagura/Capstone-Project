@@ -240,7 +240,7 @@ function setTime() {
 }
 
 //Adding the option to delete a trip using the Remove Trip button
-const removeButton = document.getElementById('remove2');
+const removeButton = document.getElementById('remove');
 removeButton.addEventListener('click', removeTrip, false);
 function removeTrip(){
   const weatherMsg = document.getElementById("weatherMsg");
