@@ -12,6 +12,7 @@ const wbApiKey = "&key=" + process.env.WB_API_KEY;
 const pixaBaseUrl = "https://pixabay.com/api/?key=";
 const pixaApiKey = process.env.PIXA_API_KEY;
 
+//Setting up express, cors, and body-parser
 const express = require("express");
 const app = express();
 
@@ -39,7 +40,7 @@ app.get("/", function(req, res) {
   res.sendFile(path.resolve('dist/index.html'))
 });
 
-//Make POST Request
+//Make POST Request for information from Geonames API
 const appData = [];
 app.post("/postData", postData);
 function postData(req, res) {
@@ -49,8 +50,9 @@ function postData(req, res) {
     country: req.body.country
   };
   appData.push(newEntry);
-}
+};
 
+//Get data from Geonames and use to call Weatherbit API (see client side)
 app.get('/postData', (req, res)=>{
   res.send(appData);
   //clear appData so that once a trip has been posted, it doesn't keep
@@ -80,6 +82,7 @@ app.post("/wbApi", (req, res) =>{
     }
   );
 });
+
 //Resolving cors bug that occurs when trying to access Pixabay API
 app.use((req, res, next) => {
   res.header("Acess-Control-Allow-Origin", "*");

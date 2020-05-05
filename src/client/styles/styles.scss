@@ -4,18 +4,32 @@ $height: 1700px;
 $font: Georgia, serif;
 $margin: 50px;
 $font-size: 50px;
-$picMargin: 50px;
+$pic-margin: 50px;
+$pic-height: 500px;
+$pic-width: 500px;
+$msg-font-size: 40px;
+$small-margin: 10px;
+$small-padding: 10px;
+$tablet-image-height: 720px;
+$flag-height: 100px;
+$flag-width: 200px;
+$medium-margin: 30px;
+$large-font: 40px;
+$medium-font: 30px;
+$small-font: 20px;
+$input-margin: 200px;
+
 
 input, button{
   &:hover{
     font-weight: bold;
   }
   font-size: $font-size;
-  margin: 10px;
+  margin: $small-margin;
 }
 
 label{
-  margin: 200px;
+  margin: $input-margin;
 }
 
 body{
@@ -32,19 +46,19 @@ body{
 }
 
 #placePic{
-  margin: $picMargin;
-  height: 500px;
-  width: 500px;
+  margin: $pic-margin;
+  height: $pic-height;
+  width: $pic-width;
 }
 
 #lengthMsg, #weatherMsg, #countdownMsg{
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 40px;
+  font-size: $large-font;
   img{
     background-color: white;
-    margin: 30px;
+    margin: $medium-margin;
   }
 }
 
@@ -58,47 +72,45 @@ body{
   display: table;
   margin-left: auto;
   margin-right: auto;
-  // flex-direction: column;
-  // align-items: center;
-  padding: 10px;
+  padding: $small-padding;
   *{
-    padding: 20px;
-    margin: 15px;
+    padding: 2 * $small-padding;
+    margin: $small-margin;
   }
 
   img{
-    width: 200px;
-    height: 100px;
+    width: $flag-width;
+    height: $flag-height;
   }
 }
 
 td{
   border: black 5px solid;
-  padding: 10px;
+  padding: $small-padding;
 }
 
 //for tablet size
 @media (min-width: 600px) and (max-width: 800px) {
-  $height: 720px;
-  $font-size: 25px;
+  $height: $tablet-image-height;
+  $font-size: $small-font;
 
 }
 
 //for desktop size
 @media (min-width: 800px) {
   $height: 100%;
-  $font-size: 20px;
+  $font-size: $small-font;
 
   input, button{
     &:hover{
       font-weight: bold;
     }
     font-size: $font-size;
-    margin: 10px;
+    margin: $small-margin;
   }
 
   label{
-    margin: 10px;
+    margin: $small-margin;
   }
 
   body{
@@ -115,13 +127,14 @@ td{
   }
 
   #placePic{
-    margin: $picMargin;
-    height: 500px;
-    width: 500px;
+    margin-top: $pic-margin;
+    margin-left: $pic-margin;
+    height: $pic-height;
+    width: $pic-width;
   }
 
   #lengthMsg, #weatherMsg{
-    font-size: 30px;
-    margin: 20px;
+    font-size: $medium-font;
+    margin: 2 * $small-margin;
   }
 }
