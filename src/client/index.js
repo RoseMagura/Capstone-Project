@@ -66,12 +66,12 @@ const postToPixa = async (url = "", data = {}) => {
     body: JSON.stringify(data)
   })
     .then(res => res.json())
-    .then(function(res) {
+    .then((res) =>{
       const values = Object.values(res);
       const image = document.createElement("img");
       image.setAttribute("id", "placePic");
       image.src = `${values[2][0].largeImageURL}`;
-      image.width = 400; //Edit later?
+      image.width = 400;
       image.height = 400;
       document.body.appendChild(image);
       const logo = document.createElement("img");
@@ -80,7 +80,7 @@ const postToPixa = async (url = "", data = {}) => {
       logo.setAttribute("id", "logo");
       logo.width = 50;
       logo.height = 50;
-      logo.addEventListener("click", function() {
+      logo.addEventListener("click", () =>{
         window.open("https://pixabay.com/", "_blank");
       });
       document.body.appendChild(logo);
@@ -98,7 +98,7 @@ const postToWb = async (url = "", data = {}) => {
     body: JSON.stringify(data)
   })
     .then(res => res.json())
-    .then(function(res) {
+    .then((res) =>{
       const startDate = document.getElementById("startDate").value;
       const formatted = new Date(startDate);
       const startDay = formatted.getDate();

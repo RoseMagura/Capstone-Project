@@ -19,24 +19,24 @@ $medium-font: 30px;
 $small-font: 20px;
 $input-margin: 200px;
 
-
-input, button{
-  &:hover{
+input,
+button {
+  &:hover {
     font-weight: bold;
   }
   font-size: $font-size;
   margin: $small-margin;
 }
 
-label{
+label {
   margin: $input-margin;
 }
 
-body{
+body {
   color: $text-color;
   font-family: $font;
   font-size: $font-size;
-  background-image: url('pinkmarble.jpg');
+  background-image: url("pinkmarble.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -45,46 +45,49 @@ body{
   margin: $margin;
 }
 
-#placePic{
+#placePic {
   margin: $pic-margin;
   height: $pic-height;
   width: $pic-width;
 }
 
-#lengthMsg, #weatherMsg, #countdownMsg{
+#lengthMsg,
+#weatherMsg,
+#countdownMsg {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: $large-font;
-  img{
+  img {
     background-color: white;
     margin: $medium-margin;
   }
 }
 
-#listBox, #flightBox{
+#listBox,
+#flightBox {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#countryInfo{
+#countryInfo {
   display: table;
   margin-left: auto;
   margin-right: auto;
   padding: $small-padding;
-  *{
+  * {
     padding: 2 * $small-padding;
     margin: $small-margin;
   }
 
-  img{
+  img {
     width: $flag-width;
     height: $flag-height;
   }
 }
 
-td{
+td {
   border: black 5px solid;
   padding: $small-padding;
 }
@@ -93,7 +96,9 @@ td{
 @media (min-width: 600px) and (max-width: 800px) {
   $height: $tablet-image-height;
   $font-size: $small-font;
-
+  #weatherMsg {
+    font-size: $small-font;
+  }
 }
 
 //for desktop size
@@ -101,23 +106,24 @@ td{
   $height: 100%;
   $font-size: $small-font;
 
-  input, button{
-    &:hover{
+  input,
+  button {
+    &:hover {
       font-weight: bold;
     }
     font-size: $font-size;
     margin: $small-margin;
   }
 
-  label{
+  label {
     margin: $small-margin;
   }
 
-  body{
+  body {
     color: $text-color;
     font-family: $font;
     font-size: $font-size;
-    background-image: url('pinkmarble.jpg');
+    background-image: url("pinkmarble.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -126,14 +132,15 @@ td{
     margin: $margin;
   }
 
-  #placePic{
+  #placePic {
     margin-top: $pic-margin;
     margin-left: $pic-margin;
     height: $pic-height;
     width: $pic-width;
   }
 
-  #lengthMsg, #weatherMsg{
+  #lengthMsg,
+  #weatherMsg {
     font-size: $medium-font;
     margin: 2 * $small-margin;
   }

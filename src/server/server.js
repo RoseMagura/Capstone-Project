@@ -50,6 +50,7 @@ function postData(req, res) {
     country: req.body.country
   };
   appData.push(newEntry);
+  res.send(appData);
 };
 
 //Get data from Geonames and use to call Weatherbit API (see client side)
